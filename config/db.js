@@ -1,15 +1,13 @@
+require('dotenv').config();
 const mysql = require('mysql2');
-
-// Buat koneksi pool ke MySQL
 const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root', // Ganti dengan username MySQL Anda
-  password: '', // Ganti dengan password MySQL Anda
-  database: 'laravel', // Sesuaikan dengan nama database Anda
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   waitForConnections: true,
-  connectionLimit: 10,
+  connectionLimit: parseInt(process.env.DB_CONNECTION_LIMIT, 10), 
   queueLimit: 0
 });
 
-// Export pool promise
 module.exports = pool.promise();
