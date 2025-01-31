@@ -1,11 +1,10 @@
 const db = require('../config/db');
 
 class DutyMeal {
-  // Catat transaksi duty meal ke tabel duty_meals
-  static async createDutyMeal(employeeId, date, orderItem, orderAmount) {
+  static async createDutyMeal(employeeId, dutyMeal, date, orderAmount) {
     const [result] = await db.query(
-      'INSERT INTO duty_meals (employee_id, date, order_item, order_amount) VALUES (?, ?, ?, ?)',
-      [employeeId, date, orderItem, orderAmount]
+      'INSERT INTO duty_meals (employee_id, duty_meal, date, order_amount) VALUES (?, ?, ?, ?)',
+      [employeeId, dutyMeal, date, orderAmount]
     );
     return result.insertId;
   }
