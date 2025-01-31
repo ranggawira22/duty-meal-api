@@ -18,10 +18,16 @@ exports.checkLimit = async (req, res) => {
 };
 
 // Catat transaksi duty meal
-// Catat transaksi duty meal
 exports.recordTransaction = async (req, res) => {
     try {
       const { employeeId, date, orderAmount } = req.body;
+      
+      if (!employeeId || !date || orderAmount === undefined) {
+        return res.status(400).json({ 
+          message: 'employeeId, date, and orderAmount are required' 
+        });
+      }
+  
       const employee = await Employee.findByEmployeeId(employeeId);
   
       if (!employee) {
@@ -38,7 +44,7 @@ exports.recordTransaction = async (req, res) => {
       // Update limit di tabel employees
       await Employee.updateMealLimit(employeeId, newLimit);
   
-      // Catat transaksi dengan menyimpan nilai newLimit ke kolom duty_meal
+      // Simpan transaksi
       await DutyMeal.createDutyMeal(employeeId, newLimit, date, orderAmount);
   
       res.json({ 
@@ -46,6 +52,10 @@ exports.recordTransaction = async (req, res) => {
         remainingLimit: newLimit
       });
     } catch (err) {
-      res.status(500).json({ message: err.message });
+      console.error('Transaction Error:', err);
+      res.status(500).json({ 
+        message: 'Error processing transaction',
+        error: err.message 
+      });
     }
   };
