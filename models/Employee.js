@@ -18,7 +18,7 @@ class Employee {
       SET duty_meal_limit = ?,
           updated_at = NOW() 
       WHERE employee_id_number IS NOT NULL`,
-      [110000]
+      [1000000]
     );
   }
 }
