@@ -69,21 +69,18 @@ exports.checkEmployee = async (req, res) => {
     
     if (!employee) {
       return res.status(404).json({ 
-        message: 'Employee not found',
-        status: false 
+        message: 'Employee not found'
       });
     }
     
     res.json({ 
       name: employee.name,
-      employee_id_number: employee.employee_id_number,
-      status: true
+      employee_id_number: employee.employee_id_number
     });
   } catch (err) {
     console.error('Check Employee Error:', err);
     res.status(500).json({ 
       message: 'Error checking employee',
-      status: false,
       error: err.message 
     });
   }
