@@ -53,3 +53,38 @@ exports.recordTransaction = async (req, res) => {
     });
   }
 };
+
+exports.checkEmployee = async (req, res) => {
+  try {
+    const { employeeId } = req.body;
+    
+    if (!employeeId) {
+      return res.status(400).json({ 
+        message: 'employeeId is required',
+        status: false
+      });
+    }
+    
+    const employee = await Employee.findByEmployeeId(employeeId);
+    
+    if (!employee) {
+      return res.status(404).json({ 
+        message: 'Employee not found',
+        status: false 
+      });
+    }
+    
+    res.json({ 
+      name: employee.name,
+      employee_id_number: employee.employee_id_number,
+      status: true
+    });
+  } catch (err) {
+    console.error('Check Employee Error:', err);
+    res.status(500).json({ 
+      message: 'Error checking employee',
+      status: false,
+      error: err.message 
+    });
+  }
+};
