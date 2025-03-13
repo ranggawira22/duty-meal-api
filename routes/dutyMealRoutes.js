@@ -1,15 +1,13 @@
 const express = require('express');
+const router = express.Router();
 const dutyMealController = require('../controllers/dutyMealController');
 
-const router = express.Router();
-
-// Endpoint untuk cek limit
+// Existing routes
 router.post('/check-limit', dutyMealController.checkLimit);
-
-// Endpoint untuk catat transaksi
 router.post('/record-transaction', dutyMealController.recordTransaction);
+router.post('/check-employee', dutyMealController.checkEmployee);
 
-// Endpoint untuk cek informasi employee
-router.post('/check-ent', dutyMealController.checkEmployee);
+// Logs endpoint with filtering
+router.get('/logs', dutyMealController.getRequestLogs);
 
 module.exports = router;
